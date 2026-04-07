@@ -1,0 +1,77 @@
+Modules imported successfully.
+Using preset: profile
+Building model and data...
+Precomputing 3D positions...
+Augmentation stats: 5445 sequences, avg augments=246.3, min=1, max=300
+Starting Training...
+Validation disabled (skipping solutions.json load).
+Compiled NorMuon optimizer update kernels.
+Compiling model for training speedup...
+Epoch 1/1
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] Graph break from `Tensor.item()`, consider setting:
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]     torch._dynamo.config.capture_scalar_outputs = True
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] or:
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]     env TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] to include these operations in the captured graph.
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] Graph break: from user code at:
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]     return self._forward_varlen(
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0]     if int(cu_seqlens[0].item()) != 0:
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+W0407 14:02:39.990000 19213 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+W0407 14:02:45.196000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0407 14:02:45.196000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0407 14:02:45.196000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0407 14:02:45.196000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0407 14:02:45.938000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0407 14:02:45.938000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0407 14:02:45.938000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0407 14:02:45.938000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0407 14:02:46.082000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0407 14:02:46.082000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0407 14:02:46.082000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0407 14:02:46.082000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0407 14:02:46.085000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0407 14:02:46.085000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0407 14:02:46.085000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0407 14:02:46.085000 19213 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+/root/mdlARC/src/train.py:529: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  scheduler.step(epoch_progress)
+W0407 14:02:47.121000 19213 torch/_dynamo/convert_frame.py:1743] [10/8] torch._dynamo hit config.recompile_limit (8)
+W0407 14:02:47.121000 19213 torch/_dynamo/convert_frame.py:1743] [10/8]    function: 'torch_dynamo_resume_in_forward_at_498' (/root/mdlARC/src/tinytransformer.py:498)
+W0407 14:02:47.121000 19213 torch/_dynamo/convert_frame.py:1743] [10/8]    last reason: 10/7: tensor '___stack0' size mismatch at index 0. expected 12115, actual 14895
+W0407 14:02:47.121000 19213 torch/_dynamo/convert_frame.py:1743] [10/8] To log all recompilation reasons, use TORCH_LOGS="recompiles".
+W0407 14:02:47.121000 19213 torch/_dynamo/convert_frame.py:1743] [10/8] To diagnose recompilation issues, see https://docs.pytorch.org/docs/main/user_guide/torch_compiler/compile/programming_model.recompilation.html
+/root/mdlARC/src/train.py:529: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  scheduler.step(epoch_progress)
+Saved checkpoint to runs/tiny.pt
+Training finished in 20.12s
+effective TFLOP/s:51.61533226653781
+FLOP 1038284275286016
+FORWARD_FLOP 346094758428672
+Starting Evaluation...
+GPU cleaned. Allocated: 0.02 GB
+
+============================================================
+STARTING EVALUATION: submission_eval (Augmented augs: 300)
+============================================================
+
+Traceback (most recent call last):
+  File "/root/mdlARC/run_script.py", line 154, in <module>
+    eval_result = evaluate.run_evaluation(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mdlARC/src/evaluate.py", line 786, in run_evaluation
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.venv/lib/python3.12/site-packages/torch/serialization.py", line 1530, in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.venv/lib/python3.12/site-packages/torch/serialization.py", line 795, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.venv/lib/python3.12/site-packages/torch/serialization.py", line 776, in __init__
+    super().__init__(open(name, mode))  # noqa: SIM115
+                     ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'runs/tiny.epoch00.pt'

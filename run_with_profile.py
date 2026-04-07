@@ -2,6 +2,8 @@ import sys
 import argparse
 from pathlib import Path
 from time import perf_counter
+import torch
+from torch.profiler import profile, ProfilerActivity, schedule, tensorboard_trace_handler
 
 # Choose whether scoring is enabled or not
 SCORE_RESULTS = True
@@ -22,7 +24,7 @@ print("Modules imported successfully.")
 # 2. DEFINE CONFIG
 PRESETS = {
     "profile": {
-      "epochs": 7,
+      "epochs": 1 ,
       "max_augments": 300,
       "checkpoint_epochs": (), 
       "inference_epoch": 0,
@@ -122,23 +124,38 @@ Path("runs").mkdir(parents=True, exist_ok=True) # Create runs dir
 print("Building model and data...")
 model, dataset, dataloader, device, data_path = build.build_model_and_data(cfg)
 flops.reset_flops()
-# 4. TRAIN
+
+# 4. TRAIN (with PyTorch profiler)
 print("Starting Training...")
 t_start = perf_counter()
-train.train_model(
-    cfg,
-    model=model,
-    dataloader=dataloader,
-    dataset=dataset,
-    device=device,
-    data_path=data_path
-)
+
+PROFILE_OUTPUT = Path("runs/profiler_trace.json")
+
+with profile(
+    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
+    record_shapes=False,
+    profile_memory=False,
+    with_stack=False,
+    with_flops=False,
+) as prof:
+    train.train_model(
+        cfg,
+        model=model,
+        dataloader=dataloader,
+        dataset=dataset,
+        device=device,
+        data_path=data_path
+    )
 
 print(f"Training finished in {perf_counter() - t_start:.2f}s")
 print(f"effective TFLOP/s:{(3*flops.get_flops()*1e-12)/(perf_counter()-t_start)}")
 print(f"FLOP {3*flops.get_flops()}") #3x forward pass flop is a rough estimate of backward pass + optimizer 
 print(f"FORWARD_FLOP {flops.get_flops()}")
 #for example the backward of a matmul is two matmuls so totally 3 matmuls. 
+
+# Export profiler trace to JSON for Perfetto
+prof.export_chrome_trace(str(PROFILE_OUTPUT))
+print(f"Profiler trace exported to {PROFILE_OUTPUT}")
 
 # 5. EVALUATE / INFERENCE
 
@@ -151,25 +168,30 @@ if preset["inference_epoch"] != cfg.epochs:
         preset["inference_epoch"],
         cfg.epochs,
     )
-eval_result = evaluate.run_evaluation(
-    cfg,
-    run_name="submission_eval",
-    max_augments=cfg.max_augments,        
-    data_path=cfg.data_path,
-    checkpoint_path=inference_checkpoint_path,
-    batch_size=100,
-    splits=["test"],          
-    task_ids=None,
-)
-SUBMISSION_FILE = Path(f"runs/{eval_result[0]}/submission.json")
-print("Evaluation complete. submission.json generated.")
 
-# 6. RESULTS: score the results (if enabled), then visualise
-if SCORE_RESULTS: # scoring, if enabled
-    SOLUTIONS_FILE = Path("assets/solutions.json")
-    score = utils.score_arc_submission(SOLUTIONS_FILE, SUBMISSION_FILE)
-    if VISUALIZE:
-        utils.visualize_submissions(SUBMISSION_FILE, SOLUTIONS_FILE, mode="!")
-else:
-    if VISUALIZE:
-        utils.visualize_submissions(SUBMISSION_FILE, mode="submission")
+try:
+    eval_result = evaluate.run_evaluation(
+        cfg,
+        run_name="submission_eval",
+        max_augments=cfg.max_augments,        
+        data_path=cfg.data_path,
+        checkpoint_path=inference_checkpoint_path,
+        batch_size=100,
+        splits=["test"],          
+        task_ids=None,
+    )
+    SUBMISSION_FILE = Path(f"runs/{eval_result[0]}/submission.json")
+    print("Evaluation complete. submission.json generated.")
+
+    # 6. RESULTS: score the results (if enabled), then visualise
+    if SCORE_RESULTS: # scoring, if enabled
+        SOLUTIONS_FILE = Path("assets/solutions.json")
+        score = utils.score_arc_submission(SOLUTIONS_FILE, SUBMISSION_FILE)
+        if VISUALIZE:
+            utils.visualize_submissions(SUBMISSION_FILE, SOLUTIONS_FILE, mode="!")
+    else:
+        if VISUALIZE:
+            utils.visualize_submissions(SUBMISSION_FILE, mode="submission")
+except Exception as e:
+    print(f"Evaluation skipped due to error (inference_epoch={preset['inference_epoch']}): {e}")
+    print("Training profiling was still captured successfully.")

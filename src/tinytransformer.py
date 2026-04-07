@@ -4,6 +4,9 @@ from typing import Any, Dict, List, Optional, Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import flops
+
+PROFILE = True #set this to false to avoid graph breaks in dynamo (not sure why it only breaks sometimes)
 
 try:
     from flash_attn import flash_attn_varlen_qkvpacked_func
@@ -271,6 +274,16 @@ class MultiHeadSelfAttention(nn.Module):
                 )
 
             total_tokens, dim = hidden_states.shape
+        
+            if PROFILE:
+              N, D = hidden_states.shape
+              # projections (linear in tokens)
+              flops.add_flops(8 * N * D * D)
+              # attention core
+              lengths = cu_seqlens[1:] - cu_seqlens[:-1]
+              for S in lengths:
+                  flops.add_flops(4 * int(S) * int(S) * D)
+            
             qkv = self.qkv_proj(hidden_states)
             qkv = qkv.view(total_tokens, 3, self.n_heads, self.head_dim)
             queries, keys, values = qkv.unbind(1)
@@ -301,7 +314,14 @@ class MultiHeadSelfAttention(nn.Module):
         if hidden_states.dim() != 3:
             raise ValueError("hidden_states must be rank-2 or rank-3.")
         batch_size, seq_len, dim = hidden_states.shape
-
+        
+        if PROFILE:
+          B, S, D = batch_size, seq_len, dim
+          # QKV + OUT projections
+          flops.add_flops(8 * B * S * D * D)
+          # attention core
+          flops.add_flops(4 * B * S * S * D)
+          
         qkv = self.qkv_proj(hidden_states)
         qkv = qkv.view(batch_size, seq_len, 3, self.n_heads, self.head_dim)
         qkv = qkv.permute(2, 0, 3, 1, 4)
@@ -439,6 +459,15 @@ class FeedForward(nn.Module):
         self.dropout = nn.Dropout(config.dropout)
 
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
+        if PROFILE:
+          if hidden_states.dim() == 3:
+              B, S, D = hidden_states.shape
+          else:
+              S, D = hidden_states.shape
+              B = 1  # packed
+          d_ff = self.fc_out.in_features
+          flops.add_flops(6 * B * S * D * d_ff)
+          
         hidden_states, gate = self.fc_in(hidden_states).chunk(2, dim=-1)
         hidden_states = hidden_states * F.silu(gate)
         hidden_states = self.dropout(hidden_states)
