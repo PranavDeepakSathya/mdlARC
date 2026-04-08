@@ -381,6 +381,7 @@ def train_one_epoch(
     train_log_mode: str = "10_steps",
     log_location: str = "both",
     log_handle: Optional[TextIO] = None,
+    prof=None,
 ) -> int:
     model.train()
     step = start_step
@@ -530,6 +531,8 @@ def train_one_epoch(
             accum_index = 0
             optimizer_step += 1
             maybe_log_window()
+            if prof is not None:
+              prof.step()
     if accum_index > 0:
         if grad_clip > 0:
             nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
@@ -544,6 +547,9 @@ def train_one_epoch(
                 scheduler.step(epoch_progress)
         optimizer_step += 1
         maybe_log_window()
+        if prof is not None:        # <-- add
+          prof.step()    
+        
 
     if train_log_mode == "10_steps":
         maybe_log_window(force=True)
@@ -1113,6 +1119,7 @@ def train_model(
     device: torch.device,
     data_path: Path,
     checkpoint: Optional[Dict[str, Any]] = None,
+    prof=None,
 ) -> None:
     """Run the training loop only (no evaluation)."""
     if checkpoint is None:
@@ -1345,6 +1352,7 @@ def train_model(
                 train_log_mode=train_log_mode,
                 log_location=log_location,
                 log_handle=log_handle,
+                prof=prof,
             )
 
             if val_dataloader is not None:

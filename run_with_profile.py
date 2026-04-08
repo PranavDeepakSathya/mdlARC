@@ -1,9 +1,10 @@
 import sys
+import json
 import argparse
 from pathlib import Path
 from time import perf_counter
 import torch
-from torch.profiler import profile, ProfilerActivity, schedule, tensorboard_trace_handler
+from torch.profiler import profile, ProfilerActivity, schedule
 
 # Choose whether scoring is enabled or not
 SCORE_RESULTS = True
@@ -24,7 +25,7 @@ print("Modules imported successfully.")
 # 2. DEFINE CONFIG
 PRESETS = {
     "profile": {
-      "epochs": 1 ,
+      "epochs": 7,
       "max_augments": 300,
       "checkpoint_epochs": (), 
       "inference_epoch": 0,
@@ -130,13 +131,26 @@ print("Starting Training...")
 t_start = perf_counter()
 
 PROFILE_OUTPUT = Path("runs/profiler_trace.json")
+STATS_OUTPUT = Path("runs/profile_stats.json")
+
+steps_per_epoch = len(dataloader)
+num_epochs = preset["epochs"]
+
+# Schedule: skip into a middle epoch, warmup 2 steps, record 5.
+# With 7 epochs, we skip 3 full epochs to land in epoch 4 (0-indexed: epoch 3).
+skip_steps = 3 * steps_per_epoch
+warmup_steps = 2
+active_steps = 5
 
 with profile(
-    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
-    record_shapes=False,
-    profile_memory=False,
-    with_stack=False,
-    with_flops=False,
+    activities=[ProfilerActivity.CPU,ProfilerActivity.CUDA],
+    schedule=schedule(
+        wait=skip_steps,
+        warmup=warmup_steps,
+        active=active_steps,
+        repeat=1,
+    ),
+    on_trace_ready=lambda p: p.export_chrome_trace(str(PROFILE_OUTPUT)),
 ) as prof:
     train.train_model(
         cfg,
@@ -144,17 +158,72 @@ with profile(
         dataloader=dataloader,
         dataset=dataset,
         device=device,
-        data_path=data_path
+        data_path=data_path,
+        prof=prof,
     )
 
-print(f"Training finished in {perf_counter() - t_start:.2f}s")
-print(f"effective TFLOP/s:{(3*flops.get_flops()*1e-12)/(perf_counter()-t_start)}")
-print(f"FLOP {3*flops.get_flops()}") #3x forward pass flop is a rough estimate of backward pass + optimizer 
-print(f"FORWARD_FLOP {flops.get_flops()}")
+train_time = perf_counter() - t_start
+forward_flops_total = flops.get_flops()
+backward_flops_total = 2 * forward_flops_total  # standard 2x estimate
+total_flops = forward_flops_total + backward_flops_total
+
+forward_flops_per_epoch = forward_flops_total / num_epochs
+backward_flops_per_epoch = 2 * forward_flops_per_epoch
+total_flops_per_epoch = forward_flops_per_epoch + backward_flops_per_epoch
+
+forward_flops_per_step = forward_flops_total / (num_epochs * steps_per_epoch)
+backward_flops_per_step = 2 * forward_flops_per_step
+total_flops_per_step = forward_flops_per_step + backward_flops_per_step
+
+print(f"Training finished in {train_time:.2f}s")
+print(f"effective TFLOP/s:{(3*forward_flops_total*1e-12)/train_time}")
+print(f"FLOP {3*forward_flops_total}") #3x forward pass flop is a rough estimate of backward pass + optimizer 
+print(f"FORWARD_FLOP {forward_flops_total}")
 #for example the backward of a matmul is two matmuls so totally 3 matmuls. 
 
-# Export profiler trace to JSON for Perfetto
-prof.export_chrome_trace(str(PROFILE_OUTPUT))
+# Write stats
+stats = {
+    "model": {
+        "d_model": cfg.d_model,
+        "n_heads": cfg.n_heads,
+        "d_ff": cfg.d_ff,
+        "n_layers": cfg.n_layers,
+        "batch_size": cfg.batch_size,
+        "optimizer": cfg.optimizer,
+    },
+    "training": {
+        "num_epochs": num_epochs,
+        "steps_per_epoch": steps_per_epoch,
+        "total_steps": num_epochs * steps_per_epoch,
+        "wall_time_s": round(train_time, 2),
+        "time_per_step_s": round(train_time / (num_epochs * steps_per_epoch), 4),
+    },
+    "flop_counts": {
+        "fwd_per_step": forward_flops_per_step,
+        "bwd_per_step": backward_flops_per_step,
+        "fwd_per_epoch": forward_flops_per_epoch,
+        "bwd_per_epoch": backward_flops_per_epoch,
+        "fwd_total": forward_flops_total,
+        "bwd_total": backward_flops_total,
+    },
+    "throughput_flop_per_s": {
+        "achieved": round((3 * forward_flops_total) / train_time, 2),
+        "achieved_tflop_per_s": round((3 * forward_flops_total * 1e-12) / train_time, 2),
+        "peak_tflop_per_s": 210,
+        "mfu": round((3 * forward_flops_total * 1e-12) / (train_time * 210), 4),
+    },
+    "profiler": {
+        "trace_file": str(PROFILE_OUTPUT),
+        "captured_epoch": 4,
+        "skip_steps": skip_steps,
+        "warmup_steps": warmup_steps,
+        "active_steps": active_steps,
+    },
+}
+
+with open(STATS_OUTPUT, "w") as f:
+    json.dump(stats, f, indent=2)
+print(f"Profile stats written to {STATS_OUTPUT}")
 print(f"Profiler trace exported to {PROFILE_OUTPUT}")
 
 # 5. EVALUATE / INFERENCE

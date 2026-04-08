@@ -21,12 +21,6 @@ print("Modules imported successfully.")
 
 # 2. DEFINE CONFIG
 PRESETS = {
-    "profile": {
-      "epochs": 7,
-      "max_augments": 300,
-      "checkpoint_epochs": (), 
-      "inference_epoch": 0,
-    },
     "low": {
         "epochs": 90,
         "max_augments": 80,
