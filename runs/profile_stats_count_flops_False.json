@@ -1,0 +1,44 @@
+{
+  "model": {
+    "d_model": 768,
+    "n_heads": 12,
+    "d_ff": 3072,
+    "n_layers": 8,
+    "batch_size": 32,
+    "optimizer": "normuon"
+  },
+  "training": {
+    "num_epochs": 7,
+    "steps_per_epoch": 171,
+    "total_steps": 1197,
+    "wall_time_s": 86.62,
+    "time_per_step_s": 0.0724
+  },
+  "flop_counts": {
+    "fwd_per_step": 0.0,
+    "bwd_per_step": 0.0,
+    "opt_per_step": 0.0,
+    "total_per_step": 0.0,
+    "fwd_per_epoch": 0.0,
+    "bwd_per_epoch": 0.0,
+    "opt_per_epoch": 0.0,
+    "total_per_epoch": 0.0,
+    "fwd_total": 0,
+    "bwd_total": 0,
+    "opt_total": 0,
+    "total": 0
+  },
+  "throughput_flop_per_s": {
+    "achieved_tflop_per_s": 0.0,
+    "peak_tflop_per_s": 210,
+    "mfu": 0.0,
+    "acheived_tflops_per_s_in_single_step": 0.0
+  },
+  "profiler": {
+    "trace_file": "runs/profiler_trace_count_flops_False.json",
+    "captured_epoch": 4,
+    "skip_steps": 513,
+    "warmup_steps": 2,
+    "active_steps": 5
+  }
+}

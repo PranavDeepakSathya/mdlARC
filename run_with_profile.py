@@ -58,12 +58,23 @@ parser.add_argument(
     default="medium",
     help="Training preset to run.",
 )
+
+def str2bool(v):
+    return v.lower() in ("true", "1", "yes")
+
+parser.add_argument(
+    "count_flops",
+    nargs="?",
+    type=str2bool,
+    default=False
+)
 cli_args = parser.parse_args()
 preset = PRESETS[cli_args.preset]
+is_counting_flops = cli_args.count_flops
 print(f"Using preset: {cli_args.preset}")
 
 args_dict = {
-    "name": "submission_run",
+    "name": "profile_run",
     "data_path": Path("assets/challenges.json"),
     "train_log_file": Path("runs/training_log.txt"),
     "save_path": Path("runs/tiny.pt"),
@@ -130,8 +141,8 @@ flops.reset_flops()
 print("Starting Training...")
 t_start = perf_counter()
 
-PROFILE_OUTPUT = Path("runs/profiler_trace.json")
-STATS_OUTPUT = Path("runs/profile_stats.json")
+PROFILE_OUTPUT = Path(f"runs/profiler_trace_count_flops_{is_counting_flops}.json")
+STATS_OUTPUT = Path(f"runs/profile_stats_count_flops_{is_counting_flops}.json")
 
 steps_per_epoch = len(dataloader)
 num_epochs = preset["epochs"]
@@ -150,6 +161,7 @@ with profile(
         active=active_steps,
         repeat=1,
     ),
+    record_shapes = True,
     on_trace_ready=lambda p: p.export_chrome_trace(str(PROFILE_OUTPUT)),
 ) as prof:
     train.train_model(
@@ -165,21 +177,20 @@ with profile(
 train_time = perf_counter() - t_start
 forward_flops_total = flops.get_flops()
 backward_flops_total = 2 * forward_flops_total  # standard 2x estimate
-total_flops = forward_flops_total + backward_flops_total
+optimizer_flops_total = flops.get_opt_flops()
+total_flops = forward_flops_total + backward_flops_total + optimizer_flops_total
 
 forward_flops_per_epoch = forward_flops_total / num_epochs
-backward_flops_per_epoch = 2 * forward_flops_per_epoch
-total_flops_per_epoch = forward_flops_per_epoch + backward_flops_per_epoch
+backward_flops_per_epoch = backward_flops_total / num_epochs
+optimizer_flops_per_epoch = optimizer_flops_total / num_epochs
+total_flops_per_epoch = forward_flops_per_epoch + backward_flops_per_epoch + optimizer_flops_per_epoch
 
 forward_flops_per_step = forward_flops_total / (num_epochs * steps_per_epoch)
-backward_flops_per_step = 2 * forward_flops_per_step
-total_flops_per_step = forward_flops_per_step + backward_flops_per_step
+backward_flops_per_step = backward_flops_total / (num_epochs * steps_per_epoch)
+optimizer_flops_per_step = optimizer_flops_total / (num_epochs * steps_per_epoch)
+total_flops_per_step = forward_flops_per_step + backward_flops_per_step + optimizer_flops_per_step
 
-print(f"Training finished in {train_time:.2f}s")
-print(f"effective TFLOP/s:{(3*forward_flops_total*1e-12)/train_time}")
-print(f"FLOP {3*forward_flops_total}") #3x forward pass flop is a rough estimate of backward pass + optimizer 
-print(f"FORWARD_FLOP {forward_flops_total}")
-#for example the backward of a matmul is two matmuls so totally 3 matmuls. 
+
 
 # Write stats
 stats = {
@@ -201,16 +212,23 @@ stats = {
     "flop_counts": {
         "fwd_per_step": forward_flops_per_step,
         "bwd_per_step": backward_flops_per_step,
+        "opt_per_step": optimizer_flops_per_step,
+        "total_per_step": total_flops_per_step,
         "fwd_per_epoch": forward_flops_per_epoch,
         "bwd_per_epoch": backward_flops_per_epoch,
+        "opt_per_epoch": optimizer_flops_per_epoch,
+        "total_per_epoch": total_flops_per_epoch,
         "fwd_total": forward_flops_total,
         "bwd_total": backward_flops_total,
+        "opt_total": optimizer_flops_total,
+        "total": total_flops,
+        
     },
     "throughput_flop_per_s": {
-        "achieved": round((3 * forward_flops_total) / train_time, 2),
-        "achieved_tflop_per_s": round((3 * forward_flops_total * 1e-12) / train_time, 2),
+        "achieved_tflop_per_s": round((total_flops * 1e-12) / train_time, 2),
         "peak_tflop_per_s": 210,
-        "mfu": round((3 * forward_flops_total * 1e-12) / (train_time * 210), 4),
+        "mfu": round((total_flops * 1e-12) / (train_time * 210), 4),
+        "acheived_tflops_per_s_in_single_step": (total_flops_per_step*1e-12)/(train_time / (num_epochs * steps_per_epoch)),
     },
     "profiler": {
         "trace_file": str(PROFILE_OUTPUT),

@@ -23,8 +23,8 @@ from common import (
     create_dataloader,
 )
 from tinytransformer import RMSNorm, TinyTransformer
-
-
+import flops 
+PROFILE = False
 # =============================================================================
 # NorMuon Optimizer (Muon + AdamW hybrid)
 # =============================================================================
@@ -44,6 +44,20 @@ def _zeropower_via_newtonschulz5(G, steps=5):
         X = a * X + B @ X
     if G.size(-2) > G.size(-1):
         X = X.mT
+    
+    if PROFILE:    
+      shape = G.shape
+      m = min(shape[-2], shape[-1])
+      n = max(shape[-2], shape[-1])
+
+      batch = 1
+      for s in shape[:-2]:
+          batch *= s
+
+      newton_flops = batch * steps * (4 * m * m * n + 2 * m * m * m)
+
+      flops.add_opt_flops(newton_flops)
+    
     return X
 
 

@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import flops
 
-PROFILE = True #set this to false to avoid graph breaks in dynamo (not sure why it only breaks sometimes)
+PROFILE = False #set this to false to avoid graph breaks in dynamo (not sure why it only breaks sometimes)
 
 try:
     from flash_attn import flash_attn_varlen_qkvpacked_func
@@ -18,7 +18,7 @@ try:
 except ImportError:  # pragma: no cover - flex-attention optional at import time
     create_block_mask = None
     flex_attention = None
-
+2
 from common import (
     IGNORE_INDEX,
     IO_SEPARATOR_TOKEN_ID,

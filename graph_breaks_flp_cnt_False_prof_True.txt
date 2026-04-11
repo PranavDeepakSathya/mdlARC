@@ -1,0 +1,940 @@
+Modules imported successfully.
+Using preset: profile
+Building model and data...
+Precomputing 3D positions...
+Augmentation stats: 5445 sequences, avg augments=246.3, min=1, max=300
+Starting Training...
+Validation disabled (skipping solutions.json load).
+Compiled NorMuon optimizer update kernels.
+Compiling model for training speedup...
+Epoch 1/7
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] Graph break from `Tensor.item()`, consider setting:
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]     torch._dynamo.config.capture_scalar_outputs = True
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] or:
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]     env TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] to include these operations in the captured graph.
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] Graph break: from user code at:
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]     return self._forward_varlen(
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0]     if int(cu_seqlens[0].item()) != 0:
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+W0411 08:45:47.763000 21558 torch/_dynamo/variables/tensor.py:1379] [0/0] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:917
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] Unsupported Tensor.item() call with capture_scalar_outputs=False
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   Developer debug context: call_method TensorVariable() item () {}
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] User code traceback:
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     train.train_model(
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     outputs = model(
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE RESUME 0 []
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'input_ids' []
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_ATTR 'dim' [LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), dim)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 1)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE COMPARE_OP '==' [ConstantVariable(int: 1), ConstantVariable(int: 1)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 92 [ConstantVariable(bool: True)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'self' []
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_ATTR '_forward_varlen' [LazyVariableTracker(unrealized: <class 'tinytransformer.TinyTransformer'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'input_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer))]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'example_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable()]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'dihedral_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'sep_indices' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'compute_input_loss' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'targets' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'positions_3d' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE LOAD_FAST 'max_seqlen' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE KW_NAMES ('input_ids', 'example_ids', 'dihedral_ids', 'sep_indices', 'compute_input_loss', 'targets', 'positions_3d', 'cu_seqlens', 'max_seqlen') [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] TRACE CALL 9 [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:47.764000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:917
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] Unsupported Tensor.item() call with capture_scalar_outputs=False
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   Developer debug context: call_method TensorVariable() item () {}
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] User code traceback:
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     train.train_model(
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     outputs = model(
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_ATTR 'dim' [TensorVariable()]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), dim)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 1)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE COMPARE_OP '!=' [ConstantVariable(int: 1), ConstantVariable(int: 1)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE POP_JUMP_IF_TRUE 596 [ConstantVariable(bool: False)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' []
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_ATTR 'size' [TensorVariable()]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, GetAttrVariable(TensorVariable(), size)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE CALL 1 [NullVariable, GetAttrVariable(TensorVariable(), size), ConstantVariable(int: 0)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_FAST 'batch_size' [ConstantVariable(int: 33)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 33), ConstantVariable(int: 32)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE BINARY_OP 0 [ConstantVariable(int: 33), ConstantVariable(int: 32), ConstantVariable(int: 1)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE COMPARE_OP '!=' [ConstantVariable(int: 33), ConstantVariable(int: 33)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 618 [ConstantVariable(bool: False)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_GLOBAL 'int' []
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int))]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable()]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE BINARY_SUBSCR None [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable(), ConstantVariable(int: 0)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE LOAD_ATTR 'item' [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable()]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] TRACE CALL 0 [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), NullVariable, GetAttrVariable(TensorVariable(), item)]
+V0411 08:45:47.798000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:919
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] Unsupported Tensor.item() call with capture_scalar_outputs=False
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   Developer debug context: call_method TensorVariable() item () {}
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] User code traceback:
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     train.train_model(
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     outputs = model(
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE RESUME 0 []
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_CONST True []
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE STORE_FAST '__is_tracing_resume_prologue' [ConstantVariable(bool: True)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE PUSH_NULL None []
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_FAST '___stack0' [NullVariable]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_FAST '___stack1' [NullVariable, LazyVariableTracker(unrealized: <class 'type'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_CONST False [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE STORE_FAST '__is_tracing_resume_prologue' [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(bool: False)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE JUMP_FORWARD 682 [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_CONST 0 [ConstantVariable(int: 0)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE COMPARE_OP '!=' [ConstantVariable(int: 0), ConstantVariable(int: 0)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 720 [ConstantVariable(bool: False)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_GLOBAL 'int' []
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [NullVariable, LazyVariableTracker(unrealized: <class 'type'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_CONST -1 [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE BINARY_SUBSCR None [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(int: -1)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE LOAD_ATTR 'item' [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), TensorVariable()]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] TRACE CALL 0 [NullVariable, LazyVariableTracker(unrealized: <class 'type'>), NullVariable, GetAttrVariable(TensorVariable(), item)]
+V0411 08:45:48.172000 21558 torch/_dynamo/symbolic_convert.py:5127] [2/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:925
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] Graph Break Reason: Data-dependent branching
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   Hint: Use `torch.cond` to express dynamic control flow.
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   Developer debug context: attempted to jump with TensorVariable()
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] User code traceback:
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     train.train_model(
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     outputs = model(
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE BINARY_SUBSCR None [LazyVariableTracker(unrealized: <class 'torch.Tensor'>), SliceVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_CONST None [TensorVariable(), TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_CONST -1 [TensorVariable(), TensorVariable(), ConstantVariable(NoneType: None)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE BUILD_SLICE 2 [TensorVariable(), TensorVariable(), ConstantVariable(NoneType: None), ConstantVariable(int: -1)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE BINARY_SUBSCR None [TensorVariable(), TensorVariable(), SliceVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE BINARY_OP 10 [TensorVariable(), TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_ATTR 'to' [TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, GetAttrVariable(TensorVariable(), to)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'module'>)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE KW_NAMES ('dtype',) [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE CALL 1 [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE STORE_FAST 'seq_lengths' [TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_ATTR 'any' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE COMPARE_OP '<=' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), ConstantVariable(int: 0)]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 964 [TensorVariable()]
+V0411 08:45:48.239000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:960
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] Dynamic shape operator
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] User code traceback:
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     train.train_model(
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     outputs = model(
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'input_ids' [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE STORE_FAST 'token_embeds' [TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'self' []
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_ATTR 'example_embedding' [UnspecializedNNModuleVariable(TinyTransformer)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'example_ids' [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'self' [TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_ATTR 'dihedral_embedding' [TensorVariable(), UnspecializedNNModuleVariable(TinyTransformer)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'dihedral_ids' [TensorVariable(), NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE BINARY_OP 0 [TensorVariable(), TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE STORE_FAST 'sequence_embeds' [TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'sequence_embeds' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE KW_NAMES ('dim',) [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(int: 0)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(int: 0)]
+V0411 08:45:48.332000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:995
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] Dynamic shape operator
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] User code traceback:
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     train.train_model(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     outputs = model(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 995, in torch_dynamo_resume_in__forward_varlen_at_960
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks]     seq_ids = torch.repeat_interleave(
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), sum)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_FAST 'total_valid' [TensorVariable()]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_ATTR 'clamp' [TensorVariable(), TensorVariable()]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_CONST 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE KW_NAMES ('min',) [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE BINARY_OP 11 [TensorVariable(), TensorVariable()]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE STORE_FAST 'loss' [TensorVariable()]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_ATTR 'arange' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_FAST 'batch_size' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_FAST 'device' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0))]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE KW_NAMES ('device', 'dtype') [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] TRACE CALL 2 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:49.117000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:1000
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] Dynamic shape operator
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] User code traceback:
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     train.train_model(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     outputs = model(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 995, in torch_dynamo_resume_in__forward_varlen_at_960
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     seq_ids = torch.repeat_interleave(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 1000, in torch_dynamo_resume_in__forward_varlen_at_995
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks]     local_positions = local_positions - torch.repeat_interleave(
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE KW_NAMES ('device', 'dtype') [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE STORE_FAST 'local_positions' [TensorVariable()]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_FAST 'local_positions' []
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [TensorVariable()]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [TensorVariable(), NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_CONST None [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_CONST -1 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(NoneType: None)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE BUILD_SLICE 2 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(NoneType: None), ConstantVariable(int: -1)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE BINARY_SUBSCR None [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), SliceVariable()]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_ATTR 'to' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_ATTR 'long' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE KW_NAMES ('dtype',) [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] TRACE CALL 2 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:51.677000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/0] [__graph_breaks] 
+W0411 08:45:53.477000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0411 08:45:53.477000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0411 08:45:53.477000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0411 08:45:53.477000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0411 08:45:54.032000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0411 08:45:54.032000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0411 08:45:54.032000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0411 08:45:54.032000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0411 08:45:54.174000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0411 08:45:54.174000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0411 08:45:54.174000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0411 08:45:54.174000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+W0411 08:45:54.176000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+W0411 08:45:54.176000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]    File "/root/mdlARC/src/train.py", line 51, in _normuon_update
+W0411 08:45:54.176000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs]     momentum.lerp_(grad, 1 - beta)
+W0411 08:45:54.176000 21558 torch/_inductor/cudagraph_utils.py:207] [__cudagraphs] 
+/root/mdlARC/src/train.py:544: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  scheduler.step(epoch_progress)
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:917
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] Unsupported Tensor.item() call with capture_scalar_outputs=False
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   Developer debug context: call_method TensorVariable() item () {}
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] User code traceback:
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     train.train_model(
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     outputs = model(
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE RESUME 0 []
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'input_ids' []
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_ATTR 'dim' [LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), dim)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 1)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE COMPARE_OP '==' [ConstantVariable(int: 1), ConstantVariable(int: 1)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 92 [ConstantVariable(bool: True)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'self' []
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_ATTR '_forward_varlen' [LazyVariableTracker(unrealized: <class 'tinytransformer.TinyTransformer'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'input_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer))]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'example_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable()]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'dihedral_ids' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'sep_indices' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'compute_input_loss' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'targets' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'positions_3d' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE LOAD_FAST 'max_seqlen' [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE KW_NAMES ('input_ids', 'example_ids', 'dihedral_ids', 'sep_indices', 'compute_input_loss', 'targets', 'positions_3d', 'cu_seqlens', 'max_seqlen') [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] TRACE CALL 9 [NullVariable, UserMethodVariable(<function TinyTransformer._forward_varlen at 0x7f642021aca0>, UnspecializedNNModuleVariable(TinyTransformer)), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'bool'>), LazyVariableTracker(unrealized: <class 'NoneType'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:54.235000 21558 torch/_dynamo/symbolic_convert.py:5127] [0/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:917
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] Unsupported Tensor.item() call with capture_scalar_outputs=False
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   Developer debug context: call_method TensorVariable() item () {}
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] User code traceback:
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     train.train_model(
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     outputs = model(
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_ATTR 'dim' [TensorVariable()]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), dim)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 1)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE COMPARE_OP '!=' [ConstantVariable(int: 1), ConstantVariable(int: 1)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE POP_JUMP_IF_TRUE 596 [ConstantVariable(bool: False)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' []
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_ATTR 'size' [TensorVariable()]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, GetAttrVariable(TensorVariable(), size)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE CALL 1 [NullVariable, GetAttrVariable(TensorVariable(), size), ConstantVariable(int: 0)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_FAST 'batch_size' [ConstantVariable(int: 33)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_CONST 1 [ConstantVariable(int: 33), ConstantVariable(int: 32)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE BINARY_OP 0 [ConstantVariable(int: 33), ConstantVariable(int: 32), ConstantVariable(int: 1)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE COMPARE_OP '!=' [ConstantVariable(int: 33), ConstantVariable(int: 33)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 618 [ConstantVariable(bool: False)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_GLOBAL 'int' []
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int))]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable()]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE BINARY_SUBSCR None [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable(), ConstantVariable(int: 0)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE LOAD_ATTR 'item' [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), TensorVariable()]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] TRACE CALL 0 [NullVariable, LazyVariableTracker(realized: BuiltinVariable(int)), NullVariable, GetAttrVariable(TensorVariable(), item)]
+V0411 08:45:54.268000 21558 torch/_dynamo/symbolic_convert.py:5127] [1/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:925
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] Graph Break Reason: Data-dependent branching
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   Hint: Use `torch.cond` to express dynamic control flow.
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   Developer debug context: attempted to jump with TensorVariable()
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] User code traceback:
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     train.train_model(
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     outputs = model(
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE BINARY_SUBSCR None [LazyVariableTracker(unrealized: <class 'torch.Tensor'>), SliceVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_CONST None [TensorVariable(), TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_CONST -1 [TensorVariable(), TensorVariable(), ConstantVariable(NoneType: None)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE BUILD_SLICE 2 [TensorVariable(), TensorVariable(), ConstantVariable(NoneType: None), ConstantVariable(int: -1)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE BINARY_SUBSCR None [TensorVariable(), TensorVariable(), SliceVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE BINARY_OP 10 [TensorVariable(), TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_ATTR 'to' [TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, GetAttrVariable(TensorVariable(), to)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'module'>)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE KW_NAMES ('dtype',) [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE CALL 1 [NullVariable, GetAttrVariable(TensorVariable(), to), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE STORE_FAST 'seq_lengths' [TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_ATTR 'any' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE COMPARE_OP '<=' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), ConstantVariable(int: 0)]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] TRACE POP_JUMP_IF_FALSE 964 [TensorVariable()]
+V0411 08:45:54.308000 21558 torch/_dynamo/symbolic_convert.py:5127] [3/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:960
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] Dynamic shape operator
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] User code traceback:
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     train.train_model(
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     outputs = model(
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'input_ids' [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE STORE_FAST 'token_embeds' [TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'self' []
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_ATTR 'example_embedding' [UnspecializedNNModuleVariable(TinyTransformer)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'example_ids' [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE CALL 1 [NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'self' [TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_ATTR 'dihedral_embedding' [TensorVariable(), UnspecializedNNModuleVariable(TinyTransformer)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'dihedral_ids' [TensorVariable(), NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding))]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, LazyVariableTracker(realized: UnspecializedBuiltinNNModuleVariable(Embedding)), TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE BINARY_OP 0 [TensorVariable(), TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE STORE_FAST 'sequence_embeds' [TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'sequence_embeds' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE LOAD_CONST 0 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE KW_NAMES ('dim',) [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(int: 0)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(int: 0)]
+V0411 08:45:54.362000 21558 torch/_dynamo/symbolic_convert.py:5127] [4/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:995
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] Dynamic shape operator
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] User code traceback:
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     train.train_model(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     outputs = model(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 995, in torch_dynamo_resume_in__forward_varlen_at_960
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks]     seq_ids = torch.repeat_interleave(
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), sum)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_FAST 'total_valid' [TensorVariable()]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_ATTR 'clamp' [TensorVariable(), TensorVariable()]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_CONST 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE KW_NAMES ('min',) [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE BINARY_OP 11 [TensorVariable(), TensorVariable()]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE STORE_FAST 'loss' [TensorVariable()]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_ATTR 'arange' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_FAST 'batch_size' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_FAST 'device' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0))]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE KW_NAMES ('device', 'dtype') [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] TRACE CALL 2 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:45:55.306000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:1000
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] Dynamic shape operator
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] User code traceback:
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     train.train_model(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     step = train_one_epoch(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     outputs = model(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     return self._forward_varlen(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 995, in torch_dynamo_resume_in__forward_varlen_at_960
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     seq_ids = torch.repeat_interleave(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 1000, in torch_dynamo_resume_in__forward_varlen_at_995
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks]     local_positions = local_positions - torch.repeat_interleave(
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE KW_NAMES ('device', 'dtype') [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), LazyVariableTracker(unrealized: <class 'torch.device'>), LazyVariableTracker(unrealized: <class 'torch.dtype'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE STORE_FAST 'local_positions' [TensorVariable()]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_FAST 'local_positions' []
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [TensorVariable()]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [TensorVariable(), NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_FAST 'cu_seqlens' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_CONST None [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_CONST -1 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(NoneType: None)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE BUILD_SLICE 2 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), ConstantVariable(NoneType: None), ConstantVariable(int: -1)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE BINARY_SUBSCR None [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'torch.Tensor'>), SliceVariable()]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_ATTR 'to' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_ATTR 'long' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE KW_NAMES ('dtype',) [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), ConstantVariable(dtype: torch.int64)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, GetAttrVariable(TensorVariable(), to), ConstantVariable(dtype: torch.int64)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] TRACE CALL 2 [TensorVariable(), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:46:00.454000 21558 torch/_dynamo/symbolic_convert.py:5127] [6/1] [__graph_breaks] 
+/root/mdlARC/src/train.py:544: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  scheduler.step(epoch_progress)
+Epoch 2/7
+Epoch 3/7
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] Graph break in user code at /root/mdlARC/src/tinytransformer.py:995
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] Graph Break Reason: Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] Dynamic shape operator
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   Developer debug context: aten.repeat_interleave.Tensor
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] User code traceback:
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/run_with_profile.py", line 167, in <module>
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     train.train_model(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 1355, in train_model
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     step = train_one_epoch(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/train.py", line 500, in train_one_epoch
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     outputs = model(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     return self._call_impl(*args, **kwargs)
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     return forward_call(*args, **kwargs)
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 724, in forward
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     return self._forward_varlen(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 917, in _forward_varlen
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     if int(cu_seqlens[0].item()) != 0:
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 919, in torch_dynamo_resume_in__forward_varlen_at_917
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     if int(cu_seqlens[-1].item()) != total_tokens:
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 925, in torch_dynamo_resume_in__forward_varlen_at_919
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     if torch.any(seq_lengths <= 0):
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 960, in torch_dynamo_resume_in__forward_varlen_at_925
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     token_sequence_embeds = torch.repeat_interleave(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] ========== most recent `torch.compile` tracing attempt started here ==========
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]   File "/root/mdlARC/src/tinytransformer.py", line 995, in torch_dynamo_resume_in__forward_varlen_at_960
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks]     seq_ids = torch.repeat_interleave(
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] NOTE: the most recent `torch.compile` tracing attempt might not be where you applied `torch.compile`! This is due to how graph breaks are implemented - the optimized code object returned by Dynamo will call another Dynamo-generated resume function and tracing is re-enabled by calling the resume function as a normal Python function, which Dynamo intercepts as a top-level frame.
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] Most recent bytecode instructions traced (max 20):
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE CALL 0 [NullVariable, GetAttrVariable(TensorVariable(), sum)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_FAST 'total_valid' [TensorVariable()]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_ATTR 'clamp' [TensorVariable(), TensorVariable()]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_CONST 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE KW_NAMES ('min',) [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE CALL 1 [TensorVariable(), NullVariable, GetAttrVariable(TensorVariable(), clamp), ConstantVariable(int: 1)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE BINARY_OP 11 [TensorVariable(), TensorVariable()]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE STORE_FAST 'loss' [TensorVariable()]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' []
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_ATTR 'repeat_interleave' [NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_ATTR 'arange' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_FAST 'batch_size' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_FAST 'device' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_GLOBAL 'torch' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0))]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_ATTR 'long' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), PythonModuleVariable(<module 'torch' from '/root/.venv/lib/python3.12/site-packages/torch/__init__.py'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE KW_NAMES ('device', 'dtype') [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE CALL 3 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), LazyVariableTracker(unrealized: <class 'int'>), ConstantVariable(device: device(type='cuda', index=0)), ConstantVariable(dtype: torch.int64)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE LOAD_FAST 'seq_lengths' [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable()]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] TRACE CALL 2 [NullVariable, LazyVariableTracker(unrealized: <class 'builtin_function_or_method'>), TensorVariable(), LazyVariableTracker(unrealized: <class 'torch.Tensor'>)]
+V0411 08:46:24.994000 21558 torch/_dynamo/symbolic_convert.py:5127] [5/2] [__graph_breaks] 
+/root/mdlARC/src/train.py:544: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  scheduler.step(epoch_progress)
+Epoch 4/7
+/root/.venv/lib/python3.12/site-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+Epoch 5/7
+Epoch 6/7
+Epoch 7/7
+Saved checkpoint to runs/tiny.pt
+Profile stats written to runs/profile_stats_count_flops_False.json
+Profiler trace exported to runs/profiler_trace_count_flops_False.json
+Starting Evaluation...
+GPU cleaned. Allocated: 0.02 GB
+
+============================================================
+STARTING EVALUATION: submission_eval (Augmented augs: 300)
+============================================================
+
+Evaluation skipped due to error (inference_epoch=0): [Errno 2] No such file or directory: 'runs/tiny.epoch00.pt'
+Training profiling was still captured successfully.

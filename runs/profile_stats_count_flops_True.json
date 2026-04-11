@@ -1,0 +1,44 @@
+{
+  "model": {
+    "d_model": 768,
+    "n_heads": 12,
+    "d_ff": 3072,
+    "n_layers": 8,
+    "batch_size": 32,
+    "optimizer": "normuon"
+  },
+  "training": {
+    "num_epochs": 7,
+    "steps_per_epoch": 171,
+    "total_steps": 1197,
+    "wall_time_s": 92.73,
+    "time_per_step_s": 0.0775
+  },
+  "flop_counts": {
+    "fwd_per_step": 2023955134233.0225,
+    "bwd_per_step": 4047910268466.045,
+    "opt_per_step": 1296967097936.842,
+    "total_per_step": 7368832500635.909,
+    "fwd_per_epoch": 346096327953846.9,
+    "bwd_per_epoch": 692192655907693.8,
+    "opt_per_epoch": 221781373747200.0,
+    "total_per_epoch": 1260070357608740.5,
+    "fwd_total": 2422674295676928,
+    "bwd_total": 4845348591353856,
+    "opt_total": 1552469616230400,
+    "total": 8820492503261184
+  },
+  "throughput_flop_per_s": {
+    "achieved_tflop_per_s": 95.12,
+    "peak_tflop_per_s": 210,
+    "mfu": 0.453,
+    "acheived_tflops_per_s_in_single_step": 95.12012066319937
+  },
+  "profiler": {
+    "trace_file": "runs/profiler_trace_count_flops_True.json",
+    "captured_epoch": 4,
+    "skip_steps": 513,
+    "warmup_steps": 2,
+    "active_steps": 5
+  }
+}
